@@ -31503,26 +31503,27 @@ func (m *GroupMutation) ResetEdge(name string) error {
 // IncomingWebhookEventMutation represents an operation that mutates the IncomingWebhookEvent nodes in the graph.
 type IncomingWebhookEventMutation struct {
 	config
-	op             Op
-	typ            string
-	id             *string
-	tenant_id      *string
-	status         *string
-	created_at     *time.Time
-	updated_at     *time.Time
-	created_by     *string
-	updated_by     *string
-	environment_id *string
-	provider       *string
-	method         *string
-	_path          *string
-	request_id     *string
-	headers        *map[string][]string
-	body           *string
-	clearedFields  map[string]struct{}
-	done           bool
-	oldValue       func(context.Context) (*IncomingWebhookEvent, error)
-	predicates     []predicate.IncomingWebhookEvent
+	op                Op
+	typ               string
+	id                *string
+	tenant_id         *string
+	status            *string
+	created_at        *time.Time
+	updated_at        *time.Time
+	created_by        *string
+	updated_by        *string
+	environment_id    *string
+	provider          *string
+	method            *string
+	_path             *string
+	request_id        *string
+	provider_event_id *string
+	headers           *map[string][]string
+	body              *string
+	clearedFields     map[string]struct{}
+	done              bool
+	oldValue          func(context.Context) (*IncomingWebhookEvent, error)
+	predicates        []predicate.IncomingWebhookEvent
 }
 
 var _ ent.Mutation = (*IncomingWebhookEventMutation)(nil)
@@ -32077,6 +32078,55 @@ func (m *IncomingWebhookEventMutation) ResetRequestID() {
 	delete(m.clearedFields, incomingwebhookevent.FieldRequestID)
 }
 
+// SetProviderEventID sets the "provider_event_id" field.
+func (m *IncomingWebhookEventMutation) SetProviderEventID(s string) {
+	m.provider_event_id = &s
+}
+
+// ProviderEventID returns the value of the "provider_event_id" field in the mutation.
+func (m *IncomingWebhookEventMutation) ProviderEventID() (r string, exists bool) {
+	v := m.provider_event_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldProviderEventID returns the old "provider_event_id" field's value of the IncomingWebhookEvent entity.
+// If the IncomingWebhookEvent object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *IncomingWebhookEventMutation) OldProviderEventID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldProviderEventID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldProviderEventID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldProviderEventID: %w", err)
+	}
+	return oldValue.ProviderEventID, nil
+}
+
+// ClearProviderEventID clears the value of the "provider_event_id" field.
+func (m *IncomingWebhookEventMutation) ClearProviderEventID() {
+	m.provider_event_id = nil
+	m.clearedFields[incomingwebhookevent.FieldProviderEventID] = struct{}{}
+}
+
+// ProviderEventIDCleared returns if the "provider_event_id" field was cleared in this mutation.
+func (m *IncomingWebhookEventMutation) ProviderEventIDCleared() bool {
+	_, ok := m.clearedFields[incomingwebhookevent.FieldProviderEventID]
+	return ok
+}
+
+// ResetProviderEventID resets all changes to the "provider_event_id" field.
+func (m *IncomingWebhookEventMutation) ResetProviderEventID() {
+	m.provider_event_id = nil
+	delete(m.clearedFields, incomingwebhookevent.FieldProviderEventID)
+}
+
 // SetHeaders sets the "headers" field.
 func (m *IncomingWebhookEventMutation) SetHeaders(value map[string][]string) {
 	m.headers = &value
@@ -32209,7 +32259,7 @@ func (m *IncomingWebhookEventMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *IncomingWebhookEventMutation) Fields() []string {
-	fields := make([]string, 0, 13)
+	fields := make([]string, 0, 14)
 	if m.tenant_id != nil {
 		fields = append(fields, incomingwebhookevent.FieldTenantID)
 	}
@@ -32242,6 +32292,9 @@ func (m *IncomingWebhookEventMutation) Fields() []string {
 	}
 	if m.request_id != nil {
 		fields = append(fields, incomingwebhookevent.FieldRequestID)
+	}
+	if m.provider_event_id != nil {
+		fields = append(fields, incomingwebhookevent.FieldProviderEventID)
 	}
 	if m.headers != nil {
 		fields = append(fields, incomingwebhookevent.FieldHeaders)
@@ -32279,6 +32332,8 @@ func (m *IncomingWebhookEventMutation) Field(name string) (ent.Value, bool) {
 		return m.Path()
 	case incomingwebhookevent.FieldRequestID:
 		return m.RequestID()
+	case incomingwebhookevent.FieldProviderEventID:
+		return m.ProviderEventID()
 	case incomingwebhookevent.FieldHeaders:
 		return m.Headers()
 	case incomingwebhookevent.FieldBody:
@@ -32314,6 +32369,8 @@ func (m *IncomingWebhookEventMutation) OldField(ctx context.Context, name string
 		return m.OldPath(ctx)
 	case incomingwebhookevent.FieldRequestID:
 		return m.OldRequestID(ctx)
+	case incomingwebhookevent.FieldProviderEventID:
+		return m.OldProviderEventID(ctx)
 	case incomingwebhookevent.FieldHeaders:
 		return m.OldHeaders(ctx)
 	case incomingwebhookevent.FieldBody:
@@ -32404,6 +32461,13 @@ func (m *IncomingWebhookEventMutation) SetField(name string, value ent.Value) er
 		}
 		m.SetRequestID(v)
 		return nil
+	case incomingwebhookevent.FieldProviderEventID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetProviderEventID(v)
+		return nil
 	case incomingwebhookevent.FieldHeaders:
 		v, ok := value.(map[string][]string)
 		if !ok {
@@ -32460,6 +32524,9 @@ func (m *IncomingWebhookEventMutation) ClearedFields() []string {
 	if m.FieldCleared(incomingwebhookevent.FieldRequestID) {
 		fields = append(fields, incomingwebhookevent.FieldRequestID)
 	}
+	if m.FieldCleared(incomingwebhookevent.FieldProviderEventID) {
+		fields = append(fields, incomingwebhookevent.FieldProviderEventID)
+	}
 	if m.FieldCleared(incomingwebhookevent.FieldHeaders) {
 		fields = append(fields, incomingwebhookevent.FieldHeaders)
 	}
@@ -32491,6 +32558,9 @@ func (m *IncomingWebhookEventMutation) ClearField(name string) error {
 		return nil
 	case incomingwebhookevent.FieldRequestID:
 		m.ClearRequestID()
+		return nil
+	case incomingwebhookevent.FieldProviderEventID:
+		m.ClearProviderEventID()
 		return nil
 	case incomingwebhookevent.FieldHeaders:
 		m.ClearHeaders()
@@ -32538,6 +32608,9 @@ func (m *IncomingWebhookEventMutation) ResetField(name string) error {
 		return nil
 	case incomingwebhookevent.FieldRequestID:
 		m.ResetRequestID()
+		return nil
+	case incomingwebhookevent.FieldProviderEventID:
+		m.ResetProviderEventID()
 		return nil
 	case incomingwebhookevent.FieldHeaders:
 		m.ResetHeaders()

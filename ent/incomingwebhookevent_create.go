@@ -142,6 +142,20 @@ func (iwec *IncomingWebhookEventCreate) SetNillableRequestID(s *string) *Incomin
 	return iwec
 }
 
+// SetProviderEventID sets the "provider_event_id" field.
+func (iwec *IncomingWebhookEventCreate) SetProviderEventID(s string) *IncomingWebhookEventCreate {
+	iwec.mutation.SetProviderEventID(s)
+	return iwec
+}
+
+// SetNillableProviderEventID sets the "provider_event_id" field if the given value is not nil.
+func (iwec *IncomingWebhookEventCreate) SetNillableProviderEventID(s *string) *IncomingWebhookEventCreate {
+	if s != nil {
+		iwec.SetProviderEventID(*s)
+	}
+	return iwec
+}
+
 // SetHeaders sets the "headers" field.
 func (iwec *IncomingWebhookEventCreate) SetHeaders(m map[string][]string) *IncomingWebhookEventCreate {
 	iwec.mutation.SetHeaders(m)
@@ -342,6 +356,10 @@ func (iwec *IncomingWebhookEventCreate) createSpec() (*IncomingWebhookEvent, *sq
 	if value, ok := iwec.mutation.RequestID(); ok {
 		_spec.SetField(incomingwebhookevent.FieldRequestID, field.TypeString, value)
 		_node.RequestID = value
+	}
+	if value, ok := iwec.mutation.ProviderEventID(); ok {
+		_spec.SetField(incomingwebhookevent.FieldProviderEventID, field.TypeString, value)
+		_node.ProviderEventID = value
 	}
 	if value, ok := iwec.mutation.Headers(); ok {
 		_spec.SetField(incomingwebhookevent.FieldHeaders, field.TypeJSON, value)

@@ -17,7 +17,10 @@ type IncomingWebhookEvent struct {
 	RequestID     string              `json:"request_id"`
 	Headers       map[string][]string `json:"headers"`
 	Body          string              `json:"body"`
-	CreatedAt     time.Time           `json:"created_at"`
+	// ProviderEventID is the provider's own event identifier, claimed after body
+	// parsing; unique per provider when set (redelivery dedup).
+	ProviderEventID string    `json:"provider_event_id"`
+	CreatedAt       time.Time `json:"created_at"`
 }
 
 // FromEnt converts an Ent IncomingWebhookEvent to the domain model.
@@ -33,8 +36,9 @@ func FromEnt(e *ent.IncomingWebhookEvent) *IncomingWebhookEvent {
 		Method:        e.Method,
 		Path:          e.Path,
 		RequestID:     e.RequestID,
-		Headers:       e.Headers,
-		Body:          e.Body,
-		CreatedAt:     e.CreatedAt,
+		Headers:         e.Headers,
+		Body:            e.Body,
+		ProviderEventID: e.ProviderEventID,
+		CreatedAt:       e.CreatedAt,
 	}
 }

@@ -35,6 +35,8 @@ const (
 	FieldPath = "path"
 	// FieldRequestID holds the string denoting the request_id field in the database.
 	FieldRequestID = "request_id"
+	// FieldProviderEventID holds the string denoting the provider_event_id field in the database.
+	FieldProviderEventID = "provider_event_id"
 	// FieldHeaders holds the string denoting the headers field in the database.
 	FieldHeaders = "headers"
 	// FieldBody holds the string denoting the body field in the database.
@@ -57,6 +59,7 @@ var Columns = []string{
 	FieldMethod,
 	FieldPath,
 	FieldRequestID,
+	FieldProviderEventID,
 	FieldHeaders,
 	FieldBody,
 }
@@ -153,6 +156,11 @@ func ByPath(opts ...sql.OrderTermOption) OrderOption {
 // ByRequestID orders the results by the request_id field.
 func ByRequestID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRequestID, opts...).ToFunc()
+}
+
+// ByProviderEventID orders the results by the provider_event_id field.
+func ByProviderEventID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldProviderEventID, opts...).ToFunc()
 }
 
 // ByBody orders the results by the body field.

@@ -40,6 +40,8 @@ type IncomingWebhookEvent struct {
 	Path string `json:"path,omitempty"`
 	// RequestID holds the value of the "request_id" field.
 	RequestID string `json:"request_id,omitempty"`
+	// ProviderEventID holds the value of the "provider_event_id" field.
+	ProviderEventID string `json:"provider_event_id,omitempty"`
 	// Headers holds the value of the "headers" field.
 	Headers map[string][]string `json:"headers,omitempty"`
 	// Body holds the value of the "body" field.
@@ -54,7 +56,7 @@ func (*IncomingWebhookEvent) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case incomingwebhookevent.FieldHeaders:
 			values[i] = new([]byte)
-		case incomingwebhookevent.FieldID, incomingwebhookevent.FieldTenantID, incomingwebhookevent.FieldStatus, incomingwebhookevent.FieldCreatedBy, incomingwebhookevent.FieldUpdatedBy, incomingwebhookevent.FieldEnvironmentID, incomingwebhookevent.FieldProvider, incomingwebhookevent.FieldMethod, incomingwebhookevent.FieldPath, incomingwebhookevent.FieldRequestID, incomingwebhookevent.FieldBody:
+		case incomingwebhookevent.FieldID, incomingwebhookevent.FieldTenantID, incomingwebhookevent.FieldStatus, incomingwebhookevent.FieldCreatedBy, incomingwebhookevent.FieldUpdatedBy, incomingwebhookevent.FieldEnvironmentID, incomingwebhookevent.FieldProvider, incomingwebhookevent.FieldMethod, incomingwebhookevent.FieldPath, incomingwebhookevent.FieldRequestID, incomingwebhookevent.FieldProviderEventID, incomingwebhookevent.FieldBody:
 			values[i] = new(sql.NullString)
 		case incomingwebhookevent.FieldCreatedAt, incomingwebhookevent.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -145,6 +147,12 @@ func (iwe *IncomingWebhookEvent) assignValues(columns []string, values []any) er
 			} else if value.Valid {
 				iwe.RequestID = value.String
 			}
+		case incomingwebhookevent.FieldProviderEventID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field provider_event_id", values[i])
+			} else if value.Valid {
+				iwe.ProviderEventID = value.String
+			}
 		case incomingwebhookevent.FieldHeaders:
 			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field headers", values[i])
@@ -227,6 +235,9 @@ func (iwe *IncomingWebhookEvent) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("request_id=")
 	builder.WriteString(iwe.RequestID)
+	builder.WriteString(", ")
+	builder.WriteString("provider_event_id=")
+	builder.WriteString(iwe.ProviderEventID)
 	builder.WriteString(", ")
 	builder.WriteString("headers=")
 	builder.WriteString(fmt.Sprintf("%v", iwe.Headers))

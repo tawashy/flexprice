@@ -55,10 +55,18 @@ func WebhookLoggingMiddleware(
 				"tenant_id", tenantID,
 				"environment_id", environmentID,
 			)
+		} else {
+			// Expose the audit row id so provider handlers can claim the provider's
+			// event id on it (redelivery dedup via ClaimProviderEventID).
+			c.Set(ContextKeyIncomingWebhookEventID, req.ID)
 		}
 		c.Next()
 	}
 }
+
+// ContextKeyIncomingWebhookEventID is the gin context key under which
+// WebhookLoggingMiddleware exposes the persisted audit row's id.
+const ContextKeyIncomingWebhookEventID = "incoming_webhook_event_id"
 
 // extractProvider pulls the provider name from a webhook URL path.
 // Expected form: /v1/webhooks/{provider}/{tenant_id}/{environment_id}

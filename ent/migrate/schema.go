@@ -1157,6 +1157,7 @@ var (
 		{Name: "method", Type: field.TypeString, SchemaType: map[string]string{"postgres": "varchar(10)"}},
 		{Name: "path", Type: field.TypeString, SchemaType: map[string]string{"postgres": "text"}},
 		{Name: "request_id", Type: field.TypeString, Nullable: true, SchemaType: map[string]string{"postgres": "varchar(100)"}},
+		{Name: "provider_event_id", Type: field.TypeString, Nullable: true, SchemaType: map[string]string{"postgres": "varchar(255)"}},
 		{Name: "headers", Type: field.TypeJSON, Nullable: true, SchemaType: map[string]string{"postgres": "jsonb"}},
 		{Name: "body", Type: field.TypeString, Nullable: true, Size: 2147483647},
 	}
@@ -1180,6 +1181,14 @@ var (
 				Name:    "idx_incoming_webhook_events_request_id",
 				Unique:  false,
 				Columns: []*schema.Column{IncomingWebhookEventsColumns[11]},
+			},
+			{
+				Name:    "idx_incoming_webhook_events_provider_event_unique",
+				Unique:  true,
+				Columns: []*schema.Column{IncomingWebhookEventsColumns[8], IncomingWebhookEventsColumns[12]},
+				Annotation: &entsql.IndexAnnotation{
+					Where: "provider_event_id IS NOT NULL AND provider_event_id != ''",
+				},
 			},
 		},
 	}

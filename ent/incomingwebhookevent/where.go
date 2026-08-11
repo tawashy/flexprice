@@ -119,6 +119,11 @@ func RequestID(v string) predicate.IncomingWebhookEvent {
 	return predicate.IncomingWebhookEvent(sql.FieldEQ(FieldRequestID, v))
 }
 
+// ProviderEventID applies equality check predicate on the "provider_event_id" field. It's identical to ProviderEventIDEQ.
+func ProviderEventID(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldEQ(FieldProviderEventID, v))
+}
+
 // Body applies equality check predicate on the "body" field. It's identical to BodyEQ.
 func Body(v string) predicate.IncomingWebhookEvent {
 	return predicate.IncomingWebhookEvent(sql.FieldEQ(FieldBody, v))
@@ -827,6 +832,81 @@ func RequestIDEqualFold(v string) predicate.IncomingWebhookEvent {
 // RequestIDContainsFold applies the ContainsFold predicate on the "request_id" field.
 func RequestIDContainsFold(v string) predicate.IncomingWebhookEvent {
 	return predicate.IncomingWebhookEvent(sql.FieldContainsFold(FieldRequestID, v))
+}
+
+// ProviderEventIDEQ applies the EQ predicate on the "provider_event_id" field.
+func ProviderEventIDEQ(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldEQ(FieldProviderEventID, v))
+}
+
+// ProviderEventIDNEQ applies the NEQ predicate on the "provider_event_id" field.
+func ProviderEventIDNEQ(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldNEQ(FieldProviderEventID, v))
+}
+
+// ProviderEventIDIn applies the In predicate on the "provider_event_id" field.
+func ProviderEventIDIn(vs ...string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldIn(FieldProviderEventID, vs...))
+}
+
+// ProviderEventIDNotIn applies the NotIn predicate on the "provider_event_id" field.
+func ProviderEventIDNotIn(vs ...string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldNotIn(FieldProviderEventID, vs...))
+}
+
+// ProviderEventIDGT applies the GT predicate on the "provider_event_id" field.
+func ProviderEventIDGT(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldGT(FieldProviderEventID, v))
+}
+
+// ProviderEventIDGTE applies the GTE predicate on the "provider_event_id" field.
+func ProviderEventIDGTE(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldGTE(FieldProviderEventID, v))
+}
+
+// ProviderEventIDLT applies the LT predicate on the "provider_event_id" field.
+func ProviderEventIDLT(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldLT(FieldProviderEventID, v))
+}
+
+// ProviderEventIDLTE applies the LTE predicate on the "provider_event_id" field.
+func ProviderEventIDLTE(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldLTE(FieldProviderEventID, v))
+}
+
+// ProviderEventIDContains applies the Contains predicate on the "provider_event_id" field.
+func ProviderEventIDContains(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldContains(FieldProviderEventID, v))
+}
+
+// ProviderEventIDHasPrefix applies the HasPrefix predicate on the "provider_event_id" field.
+func ProviderEventIDHasPrefix(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldHasPrefix(FieldProviderEventID, v))
+}
+
+// ProviderEventIDHasSuffix applies the HasSuffix predicate on the "provider_event_id" field.
+func ProviderEventIDHasSuffix(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldHasSuffix(FieldProviderEventID, v))
+}
+
+// ProviderEventIDIsNil applies the IsNil predicate on the "provider_event_id" field.
+func ProviderEventIDIsNil() predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldIsNull(FieldProviderEventID))
+}
+
+// ProviderEventIDNotNil applies the NotNil predicate on the "provider_event_id" field.
+func ProviderEventIDNotNil() predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldNotNull(FieldProviderEventID))
+}
+
+// ProviderEventIDEqualFold applies the EqualFold predicate on the "provider_event_id" field.
+func ProviderEventIDEqualFold(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldEqualFold(FieldProviderEventID, v))
+}
+
+// ProviderEventIDContainsFold applies the ContainsFold predicate on the "provider_event_id" field.
+func ProviderEventIDContainsFold(v string) predicate.IncomingWebhookEvent {
+	return predicate.IncomingWebhookEvent(sql.FieldContainsFold(FieldProviderEventID, v))
 }
 
 // HeadersIsNil applies the IsNil predicate on the "headers" field.

@@ -68,6 +68,26 @@ func (iweu *IncomingWebhookEventUpdate) ClearUpdatedBy() *IncomingWebhookEventUp
 	return iweu
 }
 
+// SetProviderEventID sets the "provider_event_id" field.
+func (iweu *IncomingWebhookEventUpdate) SetProviderEventID(s string) *IncomingWebhookEventUpdate {
+	iweu.mutation.SetProviderEventID(s)
+	return iweu
+}
+
+// SetNillableProviderEventID sets the "provider_event_id" field if the given value is not nil.
+func (iweu *IncomingWebhookEventUpdate) SetNillableProviderEventID(s *string) *IncomingWebhookEventUpdate {
+	if s != nil {
+		iweu.SetProviderEventID(*s)
+	}
+	return iweu
+}
+
+// ClearProviderEventID clears the value of the "provider_event_id" field.
+func (iweu *IncomingWebhookEventUpdate) ClearProviderEventID() *IncomingWebhookEventUpdate {
+	iweu.mutation.ClearProviderEventID()
+	return iweu
+}
+
 // Mutation returns the IncomingWebhookEventMutation object of the builder.
 func (iweu *IncomingWebhookEventUpdate) Mutation() *IncomingWebhookEventMutation {
 	return iweu.mutation
@@ -139,6 +159,12 @@ func (iweu *IncomingWebhookEventUpdate) sqlSave(ctx context.Context) (n int, err
 	if iweu.mutation.RequestIDCleared() {
 		_spec.ClearField(incomingwebhookevent.FieldRequestID, field.TypeString)
 	}
+	if value, ok := iweu.mutation.ProviderEventID(); ok {
+		_spec.SetField(incomingwebhookevent.FieldProviderEventID, field.TypeString, value)
+	}
+	if iweu.mutation.ProviderEventIDCleared() {
+		_spec.ClearField(incomingwebhookevent.FieldProviderEventID, field.TypeString)
+	}
 	if iweu.mutation.HeadersCleared() {
 		_spec.ClearField(incomingwebhookevent.FieldHeaders, field.TypeJSON)
 	}
@@ -202,6 +228,26 @@ func (iweuo *IncomingWebhookEventUpdateOne) SetNillableUpdatedBy(s *string) *Inc
 // ClearUpdatedBy clears the value of the "updated_by" field.
 func (iweuo *IncomingWebhookEventUpdateOne) ClearUpdatedBy() *IncomingWebhookEventUpdateOne {
 	iweuo.mutation.ClearUpdatedBy()
+	return iweuo
+}
+
+// SetProviderEventID sets the "provider_event_id" field.
+func (iweuo *IncomingWebhookEventUpdateOne) SetProviderEventID(s string) *IncomingWebhookEventUpdateOne {
+	iweuo.mutation.SetProviderEventID(s)
+	return iweuo
+}
+
+// SetNillableProviderEventID sets the "provider_event_id" field if the given value is not nil.
+func (iweuo *IncomingWebhookEventUpdateOne) SetNillableProviderEventID(s *string) *IncomingWebhookEventUpdateOne {
+	if s != nil {
+		iweuo.SetProviderEventID(*s)
+	}
+	return iweuo
+}
+
+// ClearProviderEventID clears the value of the "provider_event_id" field.
+func (iweuo *IncomingWebhookEventUpdateOne) ClearProviderEventID() *IncomingWebhookEventUpdateOne {
+	iweuo.mutation.ClearProviderEventID()
 	return iweuo
 }
 
@@ -305,6 +351,12 @@ func (iweuo *IncomingWebhookEventUpdateOne) sqlSave(ctx context.Context) (_node 
 	}
 	if iweuo.mutation.RequestIDCleared() {
 		_spec.ClearField(incomingwebhookevent.FieldRequestID, field.TypeString)
+	}
+	if value, ok := iweuo.mutation.ProviderEventID(); ok {
+		_spec.SetField(incomingwebhookevent.FieldProviderEventID, field.TypeString, value)
+	}
+	if iweuo.mutation.ProviderEventIDCleared() {
+		_spec.ClearField(incomingwebhookevent.FieldProviderEventID, field.TypeString)
 	}
 	if iweuo.mutation.HeadersCleared() {
 		_spec.ClearField(incomingwebhookevent.FieldHeaders, field.TypeJSON)
